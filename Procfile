@@ -1,1 +1,1 @@
-web: gunicorn Gotham.wsgi
+web: gunicorn gotham.wsgi
