@@ -10,3 +10,11 @@ from django.db import models
 # def create_profile(sender, instance, created, **kwargs):
 #     if created:
 #         Token.objects.create(user=instance)
+class Movie(models.Model):
+    title=models.CharField(max_length=40)
+    overview=models.CharField(max_length=200)
+    trailer=models.CharField(max_length=200,null=True)
+
+
+    def __str__(self):
+        return self.title
