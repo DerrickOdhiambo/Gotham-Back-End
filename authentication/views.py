@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
-from .serializers import UserSerializer, LoginSerializer
+from rest_framework.views import APIView
+from .serializers import UserSerializer, LoginSerializer,MovieSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
 from django.contrib import auth
 import jwt
+from .models import Movie
+from rest_framework.decorators import api_view
 
 
 class RegisterView(GenericAPIView):
@@ -41,3 +44,17 @@ class LoginView(GenericAPIView):
 
             # SEND RES
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class MovieList(APIView):
+    
+    def get(self,request,fromat=None):
+        queryset= Movie.objects.all()
+        serializers=MovieSerializer(queryset,many=True)
+        return Response(serializers.data)
+
+@api_view(['GET'])
+def moviedetails(request,pk):
+    movies=Movie.objects.get(id=pk)
+    serializers=MovieSerializer(movies,many=False)
+    return Response(serializers.data)
