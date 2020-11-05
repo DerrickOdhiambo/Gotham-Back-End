@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import auth
 import jwt
 from .models import Movie
+from rest_framework.decorators import api_view
 
 
 class RegisterView(GenericAPIView):
@@ -51,3 +52,9 @@ class MovieList(APIView):
         queryset= Movie.objects.all()
         serializers=MovieSerializer(queryset,many=True)
         return Response(serializers.data)
+
+@api_view(['GET'])
+def moviedetails(request,pk):
+    movies=Movie.objects.get(id=pk)
+    serializers=MovieSerializer(movies,many=False)
+    return Response(serializers.data)
