@@ -13,7 +13,9 @@ from django.db import models
 class Movie(models.Model):
     title=models.CharField(max_length=40)
     overview=models.CharField(max_length=200)
+    poster=models.CharField(max_length=150)
     trailer=models.CharField(max_length=200,null=True)
+    year=models.IntegerField(null=True)
 
 
     def __str__(self):
